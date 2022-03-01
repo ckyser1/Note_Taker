@@ -1,4 +1,4 @@
-// Dependencies
+//third party
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
@@ -11,24 +11,21 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Creating GET routes
-
-// GET route sending user to INDEX page
+// sends to index
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// GET route sending user to NOTES page
+// sends to notes
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
-// GET route using DB.JSON file
 app.get("/api/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "db.json"));
 });
 
-// Creating POST route- takes JSON input, "title" "text" and adds a new note object to the db.json file
+// establishes json
 app.post("/api/notes", function(req, res) {
     fs.readFile(path.join(__dirname, "db.json"), "utf8", function(error, response) {
         if (error) {
@@ -50,7 +47,7 @@ app.post("/api/notes", function(req, res) {
     });
 });
 
-// Creates DELETE function- deleting the note object with the id from the DB.JSON FILE
+// Creates delete function
 app.delete("/api/notes/:id", function(req, res) {
     const deleteID = req.params.id;
     fs.readFile("db.json", "utf8", function(error, response) {
